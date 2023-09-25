@@ -29,11 +29,8 @@ jobs:
       - name: Increment version
         env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-            latest-version: ${{env.current_tag}}
-            default-release-type: patch
         run: |
-            gh workflow run increment-version.yml
+            gh workflow run increment-version.yml -f --latest-version=$TAG --default-release-type=patch
 
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
