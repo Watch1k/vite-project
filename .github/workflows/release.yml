@@ -27,10 +27,10 @@ jobs:
         run: echo "current_tag=$(gh release list | grep Latest | awk '{print $1}')" > $GITHUB_ENV
 
       - name: Increment version
-        env:
-            GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-            gh workflow run increment-version.yml -f --latest-version=$TAG -f --default-release-type=patch
+        uses: ./increment-version.yml
+        with:
+            latest-version: ${{ env.current_tag }}
+            default-release-type: patch
 
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
