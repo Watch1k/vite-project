@@ -46,7 +46,7 @@ jobs:
       - name: Push changes
         run: >
           git add -A
-          git commit --allow-empty -m "Bump affected package versions" --no-verify
+          git commit -m "Bump affected package versions" --no-verify
           git push origin main
 
       - name: Create release and trigger publish
