@@ -11,7 +11,7 @@ function writePackageJson(packageJson) {
 
 (async () => {
   const { name: packageName } = readPackageJson();
-  const eventPayload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH!).toString());
+  const eventPayload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH).toString());
   const versionType =
     eventPayload.pull_request?.labels
       ?.find((label) => ['major', 'minor', 'patch'].includes(label.name.toLowerCase()))
