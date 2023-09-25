@@ -26,11 +26,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: echo "current_tag=$(gh release list | grep Latest | awk '{print $1}')" > $GITHUB_ENV
 
-      - name: Increment version
+      - name: Run Increment Version Workflow
         uses: ./increment-version.yml
-        with:
-            latest-version: ${{ env.current_tag }}
-            default-release-type: patch
 
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
