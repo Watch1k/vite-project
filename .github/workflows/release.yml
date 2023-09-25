@@ -26,7 +26,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: echo "current_tag=$(gh release list | grep Latest | awk '{print $1}')" > $GITHUB_ENV
 
-      - name: "Increment version"
+      - name: Increment version
         description: |
           Gets the release type from the PR labels and increments the last version accordingly
         inputs:
@@ -65,7 +65,7 @@ jobs:
         run: |
           git add -A
           git commit --allow-empty -m "Bump affected package versions" --no-verify
-          git push origin main
+          git push origin master
 
       - name: Create release and trigger publish
         env:
