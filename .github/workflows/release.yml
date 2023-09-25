@@ -37,3 +37,25 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Install dependencies
+          run: yarn install --frozen-lockfile
+
+      - name: Push changes
+          run: |
+            git add -A
+            git commit --allow-empty -m "Bump affected package versions" --no-verify
+            git push origin main
+
+        - name: Create release and trigger publish
+          env:
+            PREVIOUS_TAG: ${{env.current_tag}}
+            TAG: ${{ steps.increment-version.outputs.new-version }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            gh release create $TAG --generate-notes
+#             gh workflow run publish.npm.yml -f tag=$TAG -f previous_tag=$PREVIOUS_TAG
+
+        - name: Compare Versions
+          run: |
+            yarn compare-versions ${{env.current_tag}} ${{ steps.increment-version.outputs.new-version }}
