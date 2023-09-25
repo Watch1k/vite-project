@@ -43,6 +43,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Bump versions
+        run: |
+          yarn run bump-version
+
       - name: Push changes
         run: |
           git add -A
