@@ -7,7 +7,7 @@ on:
 
 jobs:
   create-release:
-    runs-on: [self-hosted, main]
+    runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
       - name: Checkout repository
