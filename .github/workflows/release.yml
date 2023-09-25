@@ -44,10 +44,11 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Push changes
-        run: >
+        run: |
           git add -A
-          git commit -m "Bump affected package versions" --no-verify
-          git push origin main
+          git status
+          git commit --allow-empty -m "Bump affected package versions" --no-verify
+          git push origin master
 
       - name: Create release and trigger publish
         env:
