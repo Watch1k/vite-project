@@ -27,6 +27,8 @@ jobs:
         run: echo "current_tag=$(gh release list | grep Latest | awk '{print $1}')" > $GITHUB_ENV
 
       - name: Increment version
+        env:
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
             gh workflow run increment-version.yml
 
