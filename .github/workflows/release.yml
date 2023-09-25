@@ -64,7 +64,3 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create $TAG --generate-notes
-
-      - name: Compare Versions
-        run: >
-          yarn compare-versions ${{env.current_tag}} ${{steps.increment-version.outputs.new-version }}
