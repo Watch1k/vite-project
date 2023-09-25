@@ -30,7 +30,7 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-            gh workflow run increment-version.yml -f --latest-version=$TAG --default-release-type=patch
+            gh workflow run increment-version.yml -f --latest-version=$TAG -f --default-release-type=patch
 
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
