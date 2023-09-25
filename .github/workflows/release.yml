@@ -29,6 +29,9 @@ jobs:
       - name: Increment version
         env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+            latest-version: ${{env.current_tag}}
+            default-release-type: patch
         run: |
             gh workflow run increment-version.yml
 
