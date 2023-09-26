@@ -40,12 +40,12 @@ jobs:
         with:
             node-version: 16
 
-        - name: Bump versions
-          env:
+      - name: Bump versions
+        env:
             REPO_VERSION: ${{ steps.increment-version.outputs.new-version }}
-          run: |
-              export REPO_VERSION=${{ steps.increment-version.outputs.new-version }}
-              yarn run bump-version
+        run: |
+          export REPO_VERSION=${{ steps.increment-version.outputs.new-version }}
+          yarn run bump-version
 
       - name: Push changes
         run: |
