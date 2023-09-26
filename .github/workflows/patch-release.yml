@@ -35,6 +35,18 @@ jobs:
             latest-version: ${{env.current_tag}}
             default-release-type: patch
 
+      - name: Setup NodeJS 16
+        uses: actions/setup-node@v3
+        with:
+            node-version: 16
+
+        - name: Bump versions
+          env:
+            REPO_VERSION: ${{ steps.increment-version.outputs.new-version }}
+          run: |
+              export REPO_VERSION=${{ steps.increment-version.outputs.new-version }}
+              yarn run bump-version
+
       - name: Push changes
         run: |
           git add -A
