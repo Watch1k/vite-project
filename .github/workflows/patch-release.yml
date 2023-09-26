@@ -1,0 +1,51 @@
+name: Patch Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        required: true
+        description: branch to deploy
+
+jobs:
+  patch-release:
+    environment: prod
+    runs-on: [self-hosted, main]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "Oleksandr Filshyn"
+          git config user.email "host.sf@gmail.com"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Increment Version
+        id: increment-version
+        uses: icanbwell/actions/increment-version@main
+        with:
+            latest-version: ${{env.current_tag}}
+            default-release-type: patch
+
+      - name: Push changes
+        run: |
+          git add -A
+          git status
+          git commit --allow-empty -m "Bump affected package versions" --no-verify
+          git push origin ${{ inputs.ref }}
+
+      - name: Create release and trigger publish
+        env:
+            PREVIOUS_TAG: ${{env.current_tag}}
+            TAG: ${{ steps.increment-version.outputs.new-version }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            gh release create $TAG --generate-notes
