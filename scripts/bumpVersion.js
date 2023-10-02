@@ -27,6 +27,8 @@ function writePackageJson(packageJson) {
   }
 
   const repoVersion = process.env.REPO_VERSION;
+
+  if (!repoVersion) return;
   try {
     console.log(`Adding repoVersion "${repoVersion}" to package.json: "${packageName}"`);
     const packageJson = readPackageJson();

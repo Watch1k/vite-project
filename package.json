@@ -3,6 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "license": "ISC",
+  "author": "Watch1k",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Watch1k/vite-project.git"
+  },
+  "keywords": ["patch-release"],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
