@@ -24,26 +24,16 @@ jobs:
           git config user.name "Oleksandr Filshyn"
           git config user.email "host.sf@gmail.com"
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Increment Version
-        id: increment-version
-        uses: icanbwell/actions/increment-version@main
-        with:
-            latest-version: ${{env.current_tag}}
-            default-release-type: patch
-
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
         with:
             node-version: 16
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Bump versions
-        env:
-            REPO_VERSION: ${{ steps.increment-version.outputs.new-version }}
         run: |
-          export REPO_VERSION=${{ steps.increment-version.outputs.new-version }}
           yarn run bump-version
 
       - name: Push changes

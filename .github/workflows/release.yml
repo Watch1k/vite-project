@@ -64,3 +64,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create $TAG --generate-notes
+          gh workflow run publish.npm.yml -f tag=$TAG -f previous_tag=$PREVIOUS_TAG

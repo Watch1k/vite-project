@@ -1,0 +1,38 @@
+name: Publish NPM packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      previous_tag:
+        description: Previous release tag
+        required: true
+      tag:
+        description: Tag to publish
+        required: true
+
+jobs:
+  publish-npm-packages:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{github.event.inputs.tag}}
+      PREVIOUS_TAG: ${{ github.event.inputs.previous_tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{github.event.inputs.tag}}
+          fetch-depth: 0
+
+      - name: Setup NodeJS 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Publish
+        run: |
+#           npm config set @icanbwell:registry https://npm.pkg.github.com
+          yarn nx affected --target=publish --base=$PREVIOUS_TAG --head=HEAD
